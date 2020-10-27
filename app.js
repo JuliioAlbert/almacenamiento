@@ -1,6 +1,7 @@
 const express = require("express");
 const conectarDB = require("./config/db");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 //crear el Servidor
 const app = express();
 
@@ -12,7 +13,8 @@ conectarDB();
 app.use(cors());
 
 //Habilitar express.json
-app.use(express.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 //Puerto de la app
 const port = process.env.PORT || 4000;

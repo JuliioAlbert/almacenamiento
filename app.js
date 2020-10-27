@@ -16,8 +16,6 @@ app.use(function (req, res, next) {
 //Conectar a la base de datos
 conectarDB();
 
-//Habilitar Cors
-app.use(cors());
 
 //Habilitar express.json
 app.use(bodyParser.urlencoded({ extended: false }))

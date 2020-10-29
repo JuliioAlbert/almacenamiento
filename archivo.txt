@@ -1,0 +1,16 @@
+  if(val == HIGH){
+      digitalWrite(verde , HIGH);   // poner el Pin en HIGH 
+      digitalWrite(rojo , LOW); 
+      //Serial.println("POST");
+      if(actual){
+        post("true");  
+      }
+      
+  }else {
+    val =0;
+     digitalWrite(verde , LOW); 
+     digitalWrite(rojo , HIGH); 
+     //Serial.println("GET");
+     post("false");
+  }
+  

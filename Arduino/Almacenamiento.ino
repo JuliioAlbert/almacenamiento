@@ -2,14 +2,13 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
-int verde = D8;  // LED connected to digital pin 13
-int rojo = D6;  // LED connected to digital pin 13
-int inPin = D7;    // pushbutton connected to digital pin 7
-int val = 0;      // variable to store the read value
+int verde = D8;  
+int rojo = D6;  
+int inPin = D7;    
+int val = 0;      
 
 int ultimo = 0;
-int actual = 0;
-int inicial = 0;
+
 //Server
 String server = "http://almacenamiento.herokuapp.com/api/sensor";
 
@@ -39,24 +38,21 @@ void setup() {
 
 void loop() {
   
-  val = digitalRead(inPin);   // read the input pin
-  actual = val;
-  if(actual== 1 && ultimo == 0) {
+  val = digitalRead(inPin);  
+  if(val== 1 && ultimo == 0) {
     ultimo =1; 
-     digitalWrite(verde , HIGH);   // poner el Pin en HIGH 
+     digitalWrite(verde , HIGH);   
      digitalWrite(rojo , LOW); 
      post("true");
-  }else if(actual == 0 && ultimo ==1 ){
+  }else if(val == 0 && ultimo ==1 ){
     ultimo =0;
     digitalWrite(verde , LOW); 
     digitalWrite(rojo , HIGH); 
-     //Serial.println("GET");
     post("false");
   }
 }
   
   void post(String estado) {
- 
   HTTPClient http;
   String json;
   StaticJsonDocument<200> doc;

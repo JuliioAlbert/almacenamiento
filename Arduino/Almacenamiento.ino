@@ -46,24 +46,24 @@ void loop() {
   
   d = digitalRead(der);   // 
   i = digitalRead(izq);   //
-  Serial.println(d); 
-  delay(500);
-  Serial.println(i); 
-
-  if(d == 0 && i == 0 && ultimo == 0){
-    //post("false");
+ 
+  Serial.println(d);
+  if(d == 0 && i == 0 && ultimo == 0  ){
+    post("false");
     apagado();
     Serial.println("Apagado");
     b=1;
+    a=1;
+    ultimo=1;
   }else if(d == 1 && i == 0 && ultimo == 0 && b==1){
-    //post("true");
+    post("true");
     encender();
     Serial.println("ED");
     a=1;
     b=0;
     ultimo=0;
   }else if(d == 0 && i == 1 && a==1 ){
-    //post("true");
+    post("true");
     Serial.println("EI");
     encender();
     b=1;
@@ -97,4 +97,3 @@ void encender(){
     digitalWrite(verde , HIGH);   // poner el Pin en HIGH 
     digitalWrite(rojo , LOW); 
 }
-

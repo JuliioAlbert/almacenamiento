@@ -2,10 +2,12 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
-int verde = D8;  
-int rojo = D6;  
-int inPin = D7;    
-int val = 0;      
+int verde = D8;  // LED connected to digital pin 13
+int rojo = D6;  // LED connected to digital pin 13
+int inPin = D5;    
+int inPin2 = D4;
+int val = 0;
+int val2 = 0;      
 
 int ultimo = 0;
 
@@ -18,7 +20,8 @@ void setup() {
   Serial.begin(115200);    //iniciar puerto serie
   pinMode(verde, OUTPUT); 
   pinMode(rojo, OUTPUT); 
-  pinMode(inPin, INPUT);    //Interruptor
+  pinMode(inPin, INPUT);    //In
+  pinMode(inPin2, INPUT);    //In
 
   //Conexion a la Red Wifi
    WiFi.begin("julio", "huevos2020");
@@ -38,21 +41,21 @@ void setup() {
 
 void loop() {
   
-  val = digitalRead(inPin);  
-  if(val== 1 && ultimo == 0) {
-    ultimo =1; 
-     digitalWrite(verde , HIGH);   
-     digitalWrite(rojo , LOW); 
+  val = digitalRead(inPin);   // 
+  val2 = digitalRead(inPin2);   // 
+  if(val== 1 && val2== 0 && ultimo == 0) {
+     ultimo =1; 
+     encender();
      post("true");
-  }else if(val == 0 && ultimo ==1 ){
+  }else if(val == 0 && val2 ==1 && ultimo ==1 ){
     ultimo =0;
-    digitalWrite(verde , LOW); 
-    digitalWrite(rojo , HIGH); 
+    apagado();
     post("false");
   }
 }
   
   void post(String estado) {
+ 
   HTTPClient http;
   String json;
   StaticJsonDocument<200> doc;
@@ -65,3 +68,14 @@ void loop() {
   http.writeToStream(&Serial);
   http.end();
 }
+
+void apagado(){
+    digitalWrite(verde , LOW); 
+    digitalWrite(rojo , HIGH); 
+}
+
+void encender(){
+    digitalWrite(verde , HIGH);   // poner el Pin en HIGH 
+    digitalWrite(rojo , LOW); 
+}
+

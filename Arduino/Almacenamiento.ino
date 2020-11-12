@@ -47,7 +47,6 @@ void loop() {
   d = digitalRead(der);   // 
   i = digitalRead(izq);   //
  
-  Serial.println(d);
   if(d == 0 && i == 0 && ultimo == 0  ){
     post("false");
     apagado();
@@ -55,14 +54,14 @@ void loop() {
     b=1;
     a=1;
     ultimo=1;
-  }else if(d == 1 && i == 0 && ultimo == 0 && b==1){
+  }else if(d == 1 && i == 0   && b==1){
     post("true");
     encender();
     Serial.println("ED");
     a=1;
     b=0;
     ultimo=0;
-  }else if(d == 0 && i == 1 && a==1 ){
+  }else if(i == 1 && d== 0 && a==1 ){
     post("true");
     Serial.println("EI");
     encender();
